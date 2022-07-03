@@ -39,33 +39,40 @@ class AbsenModel {
 }
 
 class Content {
-  Content(
-      {this.user,
-      this.tanggal,
-      this.jamDatang,
-      this.jamDatangJadwal,
-      this.terlambat});
-
-  String? user;
-  DateTime? tanggal;
-  String? jamDatang;
-  String? jamDatangJadwal;
-  String? terlambat;
+  Content({
+    this.id,
+    this.user,
+    this.tanggal,
+    this.jamDatang,
+    this.jamDatangJadwal,
+    this.terlambat,
+    this.jamPulang,
+  });
+  final int? id;
+  final String? user;
+  final DateTime? tanggal;
+  final String? jamDatang;
+  final String? jamPulang;
+  final String? jamDatangJadwal;
+  final bool? terlambat;
 
   factory Content.fromJson(Map<String, dynamic> json) => Content(
-        user: json["user"],
-        tanggal: DateTime.parse(json["tanggal"]),
-        jamDatang: json["jam_datang"],
-        jamDatangJadwal: json["jam_datang_jadwal"],
-        terlambat: json["terlambat"],
-      );
+      id: json["id"],
+      user: json["user"],
+      tanggal: DateTime.parse(json["tanggal"]),
+      jamDatang: json["jam_datang"],
+      jamDatangJadwal: json["jam_datang_jadwal"],
+      terlambat: json["terlambat"],
+      jamPulang: json['jam_pulang']);
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "user": user,
         "tanggal":
             "${tanggal!.year.toString().padLeft(4, '0')}-${tanggal!.month.toString().padLeft(2, '0')}-${tanggal!.day.toString().padLeft(2, '0')}",
         "jam_datang": jamDatang,
         "jam_datang_jadwal": jamDatangJadwal,
         "terlambat": terlambat,
+        "jam_pulang": jamPulang,
       };
 }

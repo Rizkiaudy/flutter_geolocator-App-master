@@ -47,10 +47,9 @@ class _AbsenPageState extends State<AbsenPage> {
   // -1.2655524, 116.8667499
   static final CameraPosition _posisiUniba = CameraPosition(
     target: LatLng(-1.2649, 116.8678),
-    zoom: 17.0, 
+    zoom: 17.0,
   );
 
-  
   Set<Circle> circles = Set.from([
     Circle(
       circleId: CircleId("uniba"),
@@ -102,19 +101,43 @@ class _AbsenPageState extends State<AbsenPage> {
               children: [
                 SizedBox(height: defaultMargin),
                 Text(
-                  "Lokasi Anda",
+                  "Jadwal, ${DateFormat.yMMMMEEEEd("id").format(DateTime.now())}",
+                  style: titleTextStyle.copyWith(
+                    fontWeight: FontWeight.normal,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Jam Kerja",
                   style: titleTextStyle.copyWith(
                     fontWeight: semiBold,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "08.30 AM - 04.00 PM",
+                  style: titleTextStyle.copyWith(
+                    fontWeight: semiBold,
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
                 CustomDateFormField(
-                  title: "Date",
+                  title: "Tanggal",
                   image: "assets/icon_cuti.png",
                   controller: controllerTanggal,
                 ),
                 CustomDateFormField(
-                  title: "O'Clock",
+                  title: "Jam",
                   image: "assets/icon_jam.png",
                   controller: controllerJam,
                 ),
@@ -149,19 +172,49 @@ class _AbsenPageState extends State<AbsenPage> {
                       return BlocBuilder<AuthCubit, AuthState>(
                         builder: (context, state) {
                           if (state is AuthSuccess) {
-                            return MyButton(
-                              onTap: () async {
-                                double jarak =
-                                    await MapService().cekKejauhanUser();
-                                if (jarak < 300) {
-                                  context.read<AbsenCubit>().absensi(
-                                      username: "${state.user.content!.user}");
-                                } else {
-                                  print("user diluar radius");
-                                  dialogTidakBisaAbsen(context, jarak);
-                                }
-                              },
-                              title: "Submit",
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: MyButton(
+                                    onTap: () async {
+                                      double jarak =
+                                          await MapService().cekKejauhanUser();
+                                      if (jarak < 300) {
+                                        context.read<AbsenCubit>().absensi(
+                                            username:
+                                                "${state.user.content!.user}");
+                                      } else {
+                                        print("user diluar radius");
+                                        dialogTidakBisaAbsen(context, jarak);
+                                      }
+                                    },
+                                    title: "Clock In",
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: MyButton(
+                                    onTap: () async {
+                                      double jarak =
+                                          await MapService().cekKejauhanUser();
+                                      if (jarak < 300) {
+                                        context
+                                            .read<AbsenCubit>()
+                                            .absensiKeluar(
+                                              username:
+                                                  "${state.user.content!.user}",
+                                            );
+                                      } else {
+                                        print("user diluar radius");
+                                        dialogTidakBisaAbsen(context, jarak);
+                                      }
+                                    },
+                                    title: "Clock Out",
+                                  ),
+                                ),
+                              ],
                             );
                           } else {
                             return SizedBox();

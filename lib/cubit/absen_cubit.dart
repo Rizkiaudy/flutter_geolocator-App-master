@@ -22,6 +22,20 @@ class AbsenCubit extends Cubit<AbsenState> {
     }
   }
 
+  void absensiKeluar({required String username}) async {
+    try {
+      emit(AbsenLoading());
+      AbsenModel absen = await ApiService().absenKeluar(username);
+      if (absen.status == "success") {
+        emit(AbsenSuccess(absen));
+      } else {
+        emit(AbsenFailed(absen.errors.toString()));
+      }
+    } catch (e) {
+      emit(AbsenFailed(e.toString()));
+    }
+  }
+
   void dataAbsen({required String username}) async {
     try {
       emit(AbsenLoading());

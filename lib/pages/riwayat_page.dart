@@ -96,27 +96,34 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                 if (state is AbsenSuccess) {
                                   return ColumnBuilder(
                                       itemBuilder: ((context, index) {
-                                        String tanggal = DateFormat(
-                                                "EEEE, d MMMM yyyy", "id_ID")
-                                            .format(state.absen.content![index]
-                                                .tanggal!);
+                                        String tanggal =
+                                            DateFormat("d MMMM yyyy", "id_ID")
+                                                .format(state.absen
+                                                    .content![index].tanggal!);
                                         return CustomTanggalAbsen(
-                                          tanggal:
-                                              "$tanggal (${state.absen.content![index].jamDatang!})",
+                                          tanggal: tanggal,
                                           isTerlambat: state
-                                                      .absen
-                                                      .content?[index]
-                                                      .terlambat! ==
-                                                  "true"
+                                                          .absen
+                                                          .content?[index]
+                                                          .terlambat ==
+                                                      null ||
+                                                  state.absen.content?[index]
+                                                          .terlambat ==
+                                                      true
                                               ? true
                                               : false,
+                                          jamDatang: state
+                                              .absen.content![index].jamDatang!,
+                                          jamPulang: state
+                                              .absen.content![index].jamPulang,
                                         );
                                       }),
                                       itemCount: state.absen.content!.length);
                                 }
                                 return CustomTanggalAbsen(
-                                  tanggal: "Minggu, 30 September (07:10:30)",
+                                  tanggal: " - ",
                                   isTidakHadir: true,
+                                  jamDatang: " - ",
                                 );
                               },
                             ),

@@ -11,7 +11,7 @@ class RiwayatAbsenCubit extends Cubit<RiwayatAbsenState> {
     int hadir = 0;
     int terlambat = 0;
     for (int i = 0; i < content.length; i++) {
-      if (content[i].terlambat == "false") {
+      if (content[i].terlambat == false) {
         hadir++;
         emit(RiwayatAbsen(hadir, terlambat, content[i]));
       } else {

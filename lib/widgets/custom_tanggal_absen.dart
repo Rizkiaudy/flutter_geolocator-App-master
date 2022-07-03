@@ -6,11 +6,15 @@ class CustomTanggalAbsen extends StatelessWidget {
       {Key? key,
       this.isTerlambat = false,
       this.isTidakHadir = false,
-      required this.tanggal})
+      required this.tanggal,
+      required this.jamDatang,
+      this.jamPulang})
       : super(key: key);
 
   final String tanggal;
   final bool isTerlambat, isTidakHadir;
+  final String jamDatang;
+  final String? jamPulang;
 
   Color bgColor() {
     if (isTerlambat == true) {
@@ -28,7 +32,7 @@ class CustomTanggalAbsen extends StatelessWidget {
         "Terlambat",
         style: redTextStyle.copyWith(
           fontWeight: semiBold,
-          fontSize: 13,
+          fontSize: 11,
         ),
       );
     } else if (isTidakHadir == true) {
@@ -36,7 +40,7 @@ class CustomTanggalAbsen extends StatelessWidget {
         "Tidak Hadir",
         style: orangeTextStyle.copyWith(
           fontWeight: semiBold,
-          fontSize: 13,
+          fontSize: 11,
         ),
       );
     } else {
@@ -44,7 +48,7 @@ class CustomTanggalAbsen extends StatelessWidget {
         "Hadir",
         style: greenTextStyle.copyWith(
           fontWeight: semiBold,
-          fontSize: 13,
+          fontSize: 11,
         ),
       );
     }
@@ -65,15 +69,40 @@ class CustomTanggalAbsen extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
+            flex: 2,
             child: Text(
               tanggal,
               style: blackTextStyle,
             ),
           ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(
+              jamDatang,
+              style: blackTextStyle,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(
+              jamPulang ?? "-",
+              style: blackTextStyle,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
           Container(
-            width: 102,
             height: 36,
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             margin: EdgeInsets.only(left: 15),
             alignment: Alignment.center,
             decoration: BoxDecoration(
